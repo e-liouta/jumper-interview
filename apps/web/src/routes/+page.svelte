@@ -11,9 +11,7 @@
         password: z.string().min(1),
       }),
     }),
-    onSubmit: async (values) => {
-
-    },
+    onSubmit: async (values) => {},
     onSuccess: () => {
       location.reload();
     },
