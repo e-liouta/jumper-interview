@@ -1,0 +1,19 @@
+@import "./../globals/mixins";
+@import "./../globals/variables";
+
+:host {
+  display: inline-block;
+}
+
+svg {
+  height: 100%;
+  width: 100%;
+}
+
+svg > * {
+  fill: currentColor;
+}
+
+#hilight {
+  fill: var(--primary, currentColor);
+}

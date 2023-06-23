@@ -1,0 +1,43 @@
+{
+  "folders": [
+    {
+      "path": "./",
+      "folder_exclude_patterns": [".turbo", ".expo"],
+      "file_exclude_patterns": ["tsconfig.tsbuildinfo"],
+      "follow_symlinks": true
+    }
+  ],
+  "settings": {
+    "tab_size": 2,
+    "ensure_newline_at_eof_on_save": true,
+    "trim_trailing_white_space_on_save": true,
+    "translate_tabs_to_spaces": true,
+    "js_prettier": {
+      "debug": true,
+      "custom_file_extensions": ["svelte"],
+      "additional_cli_args": {
+        "--config-precedence": "file-override"
+      }
+    }
+  },
+  "build_systems": [
+    {
+      "name": "Start",
+      "shell_cmd": "npm start",
+      "target": "terminus_open",
+      "auto_close": false
+    },
+    {
+      "name": "Build",
+      "shell_cmd": "npm run build",
+      "target": "terminus_open",
+      "auto_close": false
+    },
+    {
+      "name": "Clean Build",
+      "shell_cmd": "npm run build -- --force",
+      "target": "terminus_open",
+      "auto_close": false
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+@import "./../globals/mixins";
+@import "./../globals/variables";
+
+$styles: (
+  primary: $blue-4,
+  secondary: $gray-4,
+  success: $green-4,
+  warning: $green-4,
+  danger: $red-4,
+);
+
+:host {
+  display: inline-block;
+  overflow-y: hidden;
+}
+
+#wrapper {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0 0.8rem;
+  border: none;
+  cursor: pointer;
+  align-content: center;
+  font-family: ui-rounded, "SF Pro Rounded", system-ui, san-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition: all 0.14s ease;
+  -moz-transition: all 0.14s ease;
+  -o-transition: all 0.14s ease;
+  transition: all 0.14s ease;
+  perspective: 100px;
+  margin: 0;
+  height: 3rem;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+#content {
+  -webkit-transition: all 0.14s ease;
+  -moz-transition: all 0.14s ease;
+  -o-transition: all 0.14s ease;
+  transition: all 0.14s ease;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #wrapper:hover #content {
+    -webkit-transform: translate3d(0, 0, 2px);
+    transform: translate3d(0, 0, 2px);
+  }
+}
+
+#wrapper:active #content {
+  -webkit-transform: translate3d(0, 0, 4px);
+  transform: translate3d(0, 0, 4px);
+}
+
+$firstStyle: false;
+@each $style, $color in $styles {
+  $styleSelector: "[" + $style + "]";
+  @if not($firstStyle) {
+    $firstStyle: true;
+    $styleSelector: "";
+    @each $s, $c in $styles {
+      @if $s != $style {
+        $styleSelector: $styleSelector + ":not([" + $s + "])";
+      }
+    }
+  }
+  @each $light in (true, false) {
+    $dark: not($light);
+    $themeSelector: "[dark]";
+    @if $light {
+      $themeSelector: ":not([dark])";
+    }
+
+    :host(#{$styleSelector}#{$themeSelector}:not([outline]):not([ghost]))
+      #wrapper {
+      color: if($light, white, $gray-8);
+      &:not([disabled]) {
+        background-color: lightenDarken($color, 10%, $light);
+
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            color: if($light, darken(white, 5%), lighten($gray-8, 5%));
+            background-color: lightenDarken($color, 15%, $light);
+          }
+        }
+
+        &:active {
+          color: if($light, darken(white, 10%), lighten($gray-8, 10%));
+          background-color: lightenDarken($color, 20%, $light);
+        }
+      }
+      &[disabled] {
+        background-color: lightenDarken($color, 20%, $dark);
+      }
+    }
+
+    :host(#{$styleSelector}#{$themeSelector}[outline]) #wrapper {
+      &:not([disabled]) {
+        box-shadow: 0px 0px 0px 2px lightenDarken($color, 10%, $light) inset;
+
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            box-shadow: 0px 0px 0px 2px lightenDarken($color, 15%, $light) inset;
+          }
+        }
+
+        &:active {
+          box-shadow: 0px 0px 0px 2px lightenDarken($color, 20%, $light) inset;
+        }
+      }
+      &[disabled] {
+        box-shadow: 0px 0px 0px 2px lightenDarken($color, 20%, $dark) inset;
+      }
+    }
+
+    :host(#{$styleSelector}#{$themeSelector}[outline]) #wrapper,
+    :host(#{$styleSelector}#{$themeSelector}[ghost]) #wrapper {
+      background-color: transparent;
+      &:not([disabled]) {
+        color: lightenDarken($color, 10%, $light);
+
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            color: lightenDarken($color, 15%, $light);
+          }
+        }
+
+        &:active {
+          color: lightenDarken($color, 20%, $light);
+        }
+      }
+      &[disabled] {
+        color: lightenDarken($color, 20%, $dark);
+      }
+    }
+  }
+}

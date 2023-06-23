@@ -1,0 +1,6 @@
+@function lightenDarken($color, $adjustment, $darken) {
+  @if $darken {
+    @return darken($color, $adjustment);
+  }
+  @return lighten($color, $adjustment);
+}
