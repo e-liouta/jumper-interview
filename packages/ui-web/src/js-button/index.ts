@@ -2,9 +2,11 @@ import { LitElement, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import styles from "./styles.scss";
 
+
 @customElement("js-button")
 export class JsButton extends LitElement {
   static readonly styles = styles;
+  
 
   /**
    * Primary style
@@ -102,11 +104,31 @@ export class JsButton extends LitElement {
     setTimeout(() => {
       this._innerText = this.innerText;
     });
+    
 
-    return html`<div id="wrapper">
-      <div id="content">
-        <slot></slot>
+  render() {
+    return html`
+      <div id="wrapper">
+        <div id="content">
+          ${this.trailing
+            ? html`
+                <js-icon
+                  icon="js-document"
+                  style="color: #296ba9; width: 2rem; height: 2rem"
+                ></js-icon>
+                <p>hi</p>
+                <slot></slot>
+              `
+            : html`
+                <slot></slot>
+                <js-icon
+                  icon="js-document"
+                  style="color: #296ba9; width: 2rem; height: 2rem"
+                ></js-icon>
+              `}
+        </div>
       </div>
-    </div>`;
+    `;
   }
+
 }
